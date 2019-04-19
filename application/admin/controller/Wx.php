@@ -8,7 +8,7 @@ use think\Db;
 
 class Wx
 {
-    public function index()
+    public function index1()
     {
     	$code = input('get.code');
         //appid
@@ -61,6 +61,10 @@ class Wx
 		$openid = Session::get('openid');
 		return json(['code'=>'1','message'=>$openid,"result"=>$openid]);
 
+    }
+
+    public function index(){
+    	return '111';
     }
 
     public function gettype(){
