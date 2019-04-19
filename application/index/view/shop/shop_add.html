@@ -75,7 +75,17 @@
 
                              <tr>
                                 <th>商品介绍：</th>
-                                <td><textarea name="shop_details" class="common-textarea" id="content" cols="30" style="width: 98%;" rows="10"></textarea></td>
+                                <td>
+                                    <script id="container" name="shop_details" type="text/plain" style="width:900px;height:500px"></script>
+                                    <!-- 配置文件 -->
+                                    <script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
+                                    <!-- 编辑器源码文件 -->
+                                    <script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.js"></script>
+                                    <!-- 实例化编辑器 -->
+                                    <script type="text/javascript">
+                                        var ue = UE.getEditor('container');
+                                    </script>
+                                </td>
                             </tr>
 
                             <tr>
