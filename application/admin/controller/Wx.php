@@ -65,7 +65,8 @@ class Wx
 
     public function gettype(){
     	$serch = input('post.serch');
-    	$type = Db::table('type')->where('type_pid','1')->select();
+    	$type = input('post.type');
+    	$type = Db::table('type')->where('type_pid',$type)->select();
     	foreach( $type as $k=>&$v ){
     		$map['type_pid'] = array('eq',$v['type_id']);
     		if($serch != ''){
