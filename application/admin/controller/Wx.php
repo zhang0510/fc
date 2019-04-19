@@ -79,22 +79,6 @@ class Wx
     	return json_encode(['code'=>'1','message'=>'获取成功',"result"=>$type]);
     }
 
-    public function getlist(){
-    	$serch = input('post.serch');
-    	$typeid = input('post.typeid');
-    	$map['type_pid'] = array('eq',$typeid);
-		if($serch != ''){
-			$map['type_name'] = array('like','%'.$serch.'%');
-		}
-    	$list = Db::table('type')->where($map)->select();
-    	if( $list ){
-    		return json_encode(['code'=>'1','message'=>'获取成功',"result"=>$list]);
-    	}else{
-    		return json_encode(['code'=>'2','message'=>'获取失败',"result"=>'']);
-    	}
-    	
-    }
-
     public function getshop(){
     	$serch = input('post.serch');
     	$typeid = input('post.typeid');
