@@ -52,9 +52,9 @@ class Login extends Controller
 		$isset_session = Session::has('openid');
 		$openid = Session::get('openid');
 		if($isset_session){
-			$result = Db::table('user')->field('uname')->where('openid',$openid)->find();
+			$result = Db::table('user')->field('role_id,uname')->where('openid',$openid)->find();
 			if( !empty( $result ) ){
-				return json(['code'=>'1001','message'=>'已绑定',"result"=>$result['uname']]);
+				return json(['code'=>'1001','message'=>'已绑定',"result"=>$result]);
 			}else{
 				return json(['code'=>'1002','message'=>'未绑定',"result"=>'']);
 			}
