@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css"/>
+</head>
+<body>
+<div class="topbar-wrap white">
+    <div class="topbar-inner clearfix">
+        <div class="topbar-logo-wrap clearfix">
+            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+            <ul class="navbar-list clearfix">
+                <li><a class="on" href="{:url('show/index')}">首页</a></li>
+            </ul>
+        </div>
+        <div class="top-info-wrap">
+            <ul class="top-info-list clearfix">
+                <li><a href="{:url('login/login')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container clearfix">
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            <h1>菜单</h1>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <li>
+                    <ul class="sub-menu">
+                        <li><a href="{:url('user/user_list')}"><i class="icon-font">&#xe008;</i>用户管理</a></li>
+                        <li><a href="{:url('type/type_list')}"><i class="icon-font">&#xe008;</i>分类管理</a></li>
+                        <li><a href="{:url('shop/shop_list')}"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+                        <li><a href="{:url('my/myupd')}"><i class="icon-font">&#xe005;</i>修改密码</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/sidebar-->
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:url('show/index')}">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="{:url('shop/shop_list')}">修改密码管理</a>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form action="#" method="post" >
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th><i class="require-red">*</i>原密码：</th>
+                                <td>
+                                    <input class="common-text required" id="old_pwd" name="old_pwd" size="50" value="" type="password">
+                                </td>
+                            </tr>
+
+                           <tr>
+                                <th><i class="require-red">*</i>新密码：</th>
+                                <td>
+                                    <input class="common-text required" id="new_pwd" name="new_pwd" size="50" value="" type="password">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th><i class="require-red">*</i>确认密码：</th>
+                                <td>
+                                    <input class="common-text required" id="check_pwd" name="check_pwd" size="50" value="" type="password">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" value="提交" type="button" id="add">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).on('click','#add',function(){
+        var old_pwd = $('#old_pwd').val();
+        var new_pwd = $('#new_pwd').val();
+        var check_pwd = $('#check_pwd').val();
+
+        $.ajax({
+            url:"{:url('my/changePassword')}",
+            data:{old_pwd:old_pwd,new_pwd:new_pwd,check_pwd:check_pwd},
+            type:"post",
+            dataType:"json",
+
+            success:function(e){
+                if(e.code == 0){
+                    window.location.href="{:url('login/login')}";
+                }else if(e.code == 1001){
+                    alert(e.msg);
+                }else if(e.code == 1002){
+                    alert(e.msg);
+                }else{
+                    alert(e.msg);
+                }
+            }
+        })
+    })
+</script>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css"/>
+</head>
+<body>
+<div class="topbar-wrap white">
+    <div class="topbar-inner clearfix">
+        <div class="topbar-logo-wrap clearfix">
+            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+            <ul class="navbar-list clearfix">
+                <li><a class="on" href="{:url('show/index')}">首页</a></li>
+            </ul>
+        </div>
+        <div class="top-info-wrap">
+            <ul class="top-info-list clearfix">
+                <li><a href="{:url('login/login')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container clearfix">
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            <h1>菜单</h1>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <li>
+                    <ul class="sub-menu">
+                        <li><a href="{:url('user/user_list')}"><i class="icon-font">&#xe008;</i>用户管理</a></li>
+                        <li><a href="{:url('type/type_list')}"><i class="icon-font">&#xe008;</i>分类管理</a></li>
+                        <li><a href="{:url('shop/shop_list')}"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+                        <li><a href="{:url('my/myupd')}"><i class="icon-font">&#xe005;</i>修改密码</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/sidebar-->
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:url('show/index')}">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">分类管理</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form action="#" method="post">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="70">关键字:</th>
+                            <td><input class="common-text" placeholder="关键字" name="name" value="" id="name" type="text"></td>
+                            <td><button class="btn btn-primary btn2">搜索</button></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <form name="myform" id="myform" method="post">
+                <div class="result-title">
+                    <div class="result-list">
+                        <a href="{:url('type/type_add')}"><i class="icon-font"></i>新增分类</a>
+                    </div>
+                </div>
+                <div class="result-content">
+                    <table class="result-tab" width="100%">
+                        <thead>
+                        <tr>
+                            <th>分类ID</th>
+                            <th>分类标题</th>
+                            <th>分类图片</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="res" id="vo"}
+                        <tr>
+                           <td>{$vo.type_id}</td>
+                           <td>
+                                <?php echo str_repeat('&nbsp;&nbsp;&nbsp;',$vo['level']);?>
+                                {$vo.type_name}
+                           </td>
+                            <td><img src="__STATIC__/../uploads/{$vo.type_img}"  alt="" height="80px" width="100px"></td>
+                            <td>
+                                <button id="{$vo.type_id}" class="upd"><a href="{:url('type/type_upd',['type_id'=>$vo['type_id']])}">修改</a></button>
+                                <a href="{:url('Type/delete')}?id=<?php echo $vo['type_id']?>">删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>
+

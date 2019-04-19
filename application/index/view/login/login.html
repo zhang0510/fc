@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>『豪情』后台管理</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/css/admin_login.css"/>
+</head>
+<body>
+<div class="admin_login_wrap">
+    <h1>后台管理</h1>
+    <div class="adming_login_border">
+        <div class="admin_input">
+            <form action="index.html" method="post">
+                <ul class="admin_items">
+                    <li>
+                        <label for="user">用户名：</label>
+                        <input type="text" name="username"  id="uname" size="40" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <label for="pwd">密码：</label>
+                        <input type="password" name="pwd"  id="upwd" size="40" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <input type="button" tabindex="3" value="提交" class="btn btn-primary" id="login_btn" />
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#login_btn").click(function(){
+            var uname = $("#uname").val();
+            var upwd =$("#upwd").val();
+            if(uname == ''){
+                alert("用户名不能为空");
+                return;
+            }else if(upwd == ''){
+                alert("密码不能为空");
+                return;
+            }
+            $.ajax({
+                url:"{:url('Login/login_do')}",
+                data:{uname:uname,upwd:upwd},
+                dataType:"json",
+                type:"post",
+                success:function(e){
+                    if(e.code == '0'){
+                        alert(e.msg);
+                        if(window.top != null && window.top.document.URL != document.URL) {
+                            window.top.location = "{:url('Show/index')}";
+                        } else {
+                            location.href = "{:url('Show/index')}";
+                        }
+                        return;
+                    }else if(e.code == '1') {
+                        alert(e.msg);
+                    }else if(e.code == '2') {
+                        alert(e.msg);
+                    }
+                }
+            })
+        })
+    })
+</script>

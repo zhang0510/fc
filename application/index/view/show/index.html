@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css"/>
+</head>
+<body>
+<div class="topbar-wrap white">
+    <div class="topbar-inner clearfix">
+        <div class="topbar-logo-wrap clearfix">
+            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+            <ul class="navbar-list clearfix">
+                <li><a class="on" href="{:url('show/index')}">首页</a></li>
+            </ul>
+        </div>
+        <div class="top-info-wrap">
+            <ul class="top-info-list clearfix">
+                <li><a href="{:url('login/login')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container clearfix">
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            <h1>菜单</h1>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <li>
+                    <ul class="sub-menu">
+                        <li><a href="{:url('user/user_list')}"><i class="icon-font">&#xe008;</i>用户管理</a></li>
+                        <li><a href="{:url('type/type_list')}"><i class="icon-font">&#xe008;</i>分类管理</a></li>
+                        <li><a href="{:url('shop/shop_list')}"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+                        <li><a href="{:url('my/myupd')}"><i class="icon-font">&#xe005;</i>修改密码</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    <!--/sidebar-->
+    <div class="main-wrap">
+        
+        <div class="result-wrap">
+            <div class="result-title">
+                <h1>快捷操作</h1>
+            </div>
+            <div class="result-content">
+                <div class="short-wrap">
+                    <a href="{:url('type/type_add')}"><i class="icon-font">&#xe001;</i>新增分类</a>
+                    <a href="{:url('shop/shop_add')}"><i class="icon-font">&#xe005;</i>新增商品</a>
+                </div>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-title">
+                <h1>系统基本信息</h1>
+            </div>
+            <div class="result-content">
+                <ul class="sys-info-list">
+                    <li>
+                        <label class="res-lab">操作系统</label><span class="res-info">WINNT</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">运行环境</label><span class="res-info">Apache/2.2.21 (Win64) PHP/5.3.10</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">PHP运行方式</label><span class="res-info">apache2handler</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">静静设计-版本</label><span class="res-info">v-0.1</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">上传附件限制</label><span class="res-info">2M</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">北京时间</label><span class="res-info">2014年3月18日 21:08:24</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">服务器域名/IP</label><span class="res-info">localhost [ 127.0.0.1 ]</span>
+                    </li>
+                    <li>
+                        <label class="res-lab">Host</label><span class="res-info">127.0.0.1</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>

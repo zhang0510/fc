@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css"/>
+</head>
+<body>
+<div class="topbar-wrap white">
+    <div class="topbar-inner clearfix">
+        <div class="topbar-logo-wrap clearfix">
+            <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+            <ul class="navbar-list clearfix">
+                <li><a class="on" href="{:url('show/index')}">首页</a></li>
+            </ul>
+        </div>
+        <div class="top-info-wrap">
+            <ul class="top-info-list clearfix">
+                <li><a href="{:url('login/login')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container clearfix">
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            <h1>菜单</h1>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <li>
+                    <ul class="sub-menu">
+                        <li><a href="{:url('user/user_list')}"><i class="icon-font">&#xe008;</i>用户管理</a></li>
+                        <li><a href="{:url('type/type_list')}"><i class="icon-font">&#xe008;</i>分类管理</a></li>
+                        <li><a href="{:url('shop/shop_list')}"><i class="icon-font">&#xe005;</i>商品管理</a></li>
+                        <li><a href="{:url('my/myupd')}"><i class="icon-font">&#xe005;</i>修改密码</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/sidebar-->
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a href="{:url('show/index')}">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="{:url('shop/shop_list')}">商品管理</a><span class="crumb-step">&gt;</span><span>新增商品</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form action="{:url('shop/shop_upd_do')}" method="post" id="myform" name="myform" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                        <input type="hidden" value="{$res['shop_id']}" name="shop_id">
+                        <tr>
+                            <th><i class="require-red">*</i>商品名称：</th>
+                            <td>
+                                <input class="common-text required" id="title" name="shop_name" size="50" value="{$res['shop_name']}" type="text">
+                            </td>
+                        </tr>
+
+
+
+
+                        <tr>
+                            <th>商品介绍：</th>
+                            <td><textarea name="shop_details" class="common-textarea" id="content" cols="30" style="width: 98%;" rows="10">{$res['shop_details']}</textarea></td>
+                        </tr>
+
+                        <tr>
+                            <th><i class="require-red">*</i>商品图片：</th>
+                            <td><input name="shop_img" id="" type="file"><img src="__STATIC__/../uploads/{$res['shop_img']}"  alt="" height="80px" width="100px"></td>
+                        </tr>
+
+                        <tr>
+                            <th></th>
+                            <td>
+                                <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
+                                <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>
