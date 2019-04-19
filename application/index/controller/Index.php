@@ -9,6 +9,6 @@ use  think\Session;
 class index extends Controller
 {
 	public function index(){
-		echo md5('111111');
+		echo "this is index";
 	}
 }
