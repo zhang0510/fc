@@ -17,7 +17,7 @@ class Login extends Controller
 		$thirdSession = input('post.thirdSession');
 		$isset_session = Session::has('openid');
 		$openid = Session::get('openid');
-		$result = Db::table('user')->field('uid,uname')->where(['uname'=>$uname,'upwd'=>$upwd])->find();
+		$result = Db::table('user')->field('uid,uname,role_id')->where(['uname'=>$uname,'upwd'=>$upwd])->find();
 		if( $result ){
 			Db::table('user')->where('openid',$openid)->update(['openid'=>'']);
 			Db::table('user')->where('uid',$result['uid'])->update(['openid'=>$openid]);
