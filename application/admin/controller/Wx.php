@@ -8,7 +8,7 @@ use think\Db;
 
 class Wx
 {
-    public function index1()
+    public function index()
     {
     	$code = input('get.code');
         //appid
@@ -43,7 +43,7 @@ class Wx
 		//开发者如需要获取敏感数据，需要对接口返回的加密数据( encryptedData )进行对称解密
 		$encryptedData = $_GET['encryptedData'];
 		$iv = $_GET['iv'];
-		include_once (EXTEND_PATH. 'Wxdev/wxBizDataCrypt.php');
+		include_once (EXTEND_PATH. 'wxdev/wxBizDataCrypt.php');
 		$pc = new \WXBizDataCrypt($APPID, $session_key);
 		$errCode = $pc->decryptData($encryptedData, $iv, $data);  //其中$data包含用户的所有数据
 		if ($errCode != 0) {
@@ -61,10 +61,6 @@ class Wx
 		$openid = Session::get('openid');
 		return json(['code'=>'1','message'=>$openid,"result"=>$openid]);
 
-    }
-
-    public function index(){
-    	return '111';
     }
 
     public function gettype(){
