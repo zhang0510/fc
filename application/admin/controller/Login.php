@@ -32,16 +32,14 @@ class Login extends Controller
 	*/
 	public function backlogin(){
 		$thirdSession = input('post.thirdSession');
-		$isset_session = Session::has('openid');
-		if( $isset_session ){
-			$openid = Session::get('openid');
-			$result = Db::table('user')->where('openid',$openid)->update(['openid'=>null]);
-			if( $result ){
-				return json(['code'=>'1','message'=>'退出成功',"result"=>$result['uname']]);
-			}else{
-				return json(['code'=>'2','message'=>'退出失败',"result"=>'']);
-			}
-		} 
+		$openid = Session::get('openid');
+		Db::table('user')->where('openid',$openid)->update(['openid'=>null]);
+		$result = Db::table('user')->field('uid')->where('openid',$openid)->find();
+		if( empty($result) ){
+			return json(['code'=>'1','message'=>'退出成功',"result"=>$result['uname']]);
+		}else{
+			return json(['code'=>'2','message'=>'退出失败',"result"=>'']);
+		}
 	}
 
 	/**

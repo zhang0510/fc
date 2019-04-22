@@ -83,6 +83,7 @@ class Wx
     	$serch = input('post.serch');
     	$typeid = input('post.typeid');
     	$map['type_id'] = array('eq',$typeid);
+    	$map['shop_status'] = array('eq','1');
 		if($serch != ''){
 			$map['shop_name'] = array('like','%'.$serch.'%');
 		}
