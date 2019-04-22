@@ -86,9 +86,21 @@ class Wx
 		if($serch != ''){
 			$map['shop_name'] = array('like','%'.$serch.'%');
 		}
-    	$list = Db::table('shop')->where($map)->select();
+    	$list = Db::table('shop')->field('shop_id,shop_name,shop_img')->where($map)->select();
     	if( $list ){
     		return json_encode(['code'=>'1','message'=>'获取成功',"result"=>$list]);
+    	}else{
+    		return json_encode(['code'=>'2','message'=>'获取失败',"result"=>'']);
+    	}
+    	
+    }
+
+    public function getdetails(){
+    	$shop_id = input('post.shopid');
+    	$map['shop_id'] = array('eq',$shop_id);
+    	$shop_details = Db::table('shop')->where($map)->value('shop_details');
+    	if( $shop_details ){
+    		return json_encode(['code'=>'1','message'=>'获取成功',"result"=>$shop_details]);
     	}else{
     		return json_encode(['code'=>'2','message'=>'获取失败',"result"=>'']);
     	}
