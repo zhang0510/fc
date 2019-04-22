@@ -12,22 +12,18 @@ use app\index\model\Shops;
 class Shop extends Common
 {
     public function shop_add(){
-        $data = db("type")->select();
-        $res = $this->getCategory($data);
+        $res = db("type")->where("type_pid=0")->select();
+
         return view('shop/shop_add',['res'=>$res]);
     }
     
-    //递归
-    public function getCategory($data,$type_pid=0,$level=1){
-        static $new_arr = array();
-        foreach ($data as $k=>$v){
-            if($v['type_pid'] == $type_pid){
-                $v['level'] = $level;
-                $new_arr[] = $v;
-                $this->getCategory($data,$v['type_id'],$level+1);
-            }
-        }
-        return $new_arr;
+    //点击出现下一级
+    public function Addre(){
+        $region_id = input('get.region_id');
+       
+        $data = db('type')->where("type_pid = '$region_id'")->select();
+
+        echo json_encode($data);
     }
 
 
@@ -35,9 +31,10 @@ class Shop extends Common
     public function shopadd(){
     	$request = Request::instance();
         $data = $request->post();
-
+         //var_dump($data);die;   
         $file = request()->file('shop_img');
-
+        //->validate(['size'=>1567118,'ext'=>'jpg,png,gif'])
+        //size  检测文件大小      ext  检测文件类型
         $info = $file->move(ROOT_PATH . 'public' .DS .'uploads');
 
         $db = $info->getSaveName();
@@ -45,7 +42,8 @@ class Shop extends Common
         $img = str_replace("\\","/","$db");
 
         $data['shop_img']=$img;
-
+        $data['shop_status'] = 1;
+        
         $models = new Shops();
 
        if($models->getAdd($data)){
@@ -109,6 +107,20 @@ class Shop extends Common
         $res = $models -> shop_upd_do($data);
         if($res){
             return $this->redirect('shop_list');
+        }
+    }
+
+
+    public function shop_edit(){
+        $shop_id = $_GET['shop_id'];
+        $shop_status = $_GET['shop_status'];
+
+        $res = db::execute("update shop set shop_status = '$shop_status' where shop_id = '$shop_id'");
+        if($res){
+            echo 0;
+        }
+        else{
+            echo 1;
         }
     }
 

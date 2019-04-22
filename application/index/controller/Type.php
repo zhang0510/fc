@@ -13,10 +13,21 @@ class Type extends Common
 {
 	 //渲染分类页
     public function type_add(){
-        $data = db("type")->select();
-        $res = $this->getCategory($data);
+
+        $res = db("type")->where("type_pid=0")->select();
         return view('type/type_add',['res'=>$res]);
     }
+
+    public function Addre(){
+        $region_id = input('get.region_id');
+       
+        $data = db('type')->where("type_pid = '$region_id'")->select();
+
+        echo json_encode($data);
+    }
+
+
+
     
     public function getCategory($data,$type_pid=0,$level=1){
         static $new_arr = array();
@@ -51,7 +62,7 @@ class Type extends Common
     public function typeadd(){
         $request = Request::instance();
         $data = $request->post();
-
+        //var_dump($data);die;
         $file = request()->file('type_img');
 
         $info = $file->move(ROOT_PATH . 'public' .DS .'uploads');
@@ -61,6 +72,7 @@ class Type extends Common
         $img = str_replace("\\","/","$db");
 
         $data['type_img']=$img;
+        $data['type_status'] = 1;
 
         $models = new types();
 
@@ -112,7 +124,7 @@ class Type extends Common
             $img = str_replace("\\","/","$db");
             $data['type_img']=$img;
         }else{
-            $res =  $models -> findImg($data['shop_id']);
+            $res =  $models -> findImg($data['type_id']);
             $data['type_img'] =$res['type_img'];
         }
         $res = $models ->type_upd_do($data);
@@ -121,6 +133,24 @@ class Type extends Common
         }
     }
 	
+
+    public function type_edit(){
+        $type_id = $_GET['type_id'];
+        $res = db::query("select * from type where type_pid in($type_id) and type_status=1");
+        if(!$res){
+            $type_status = $_GET['type_status'];
+            $res = db::execute("update type set type_status = '$type_status' where type_id = '$type_id'");
+             if($res){
+               echo 0;
+             }
+            else{
+             echo 1;
+            }
+        }else{
+            echo 2;
+        }
+        
+    }
 
 }
 

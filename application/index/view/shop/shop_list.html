@@ -74,6 +74,7 @@
                             <th>所属分类</th>
                             <th>商品内容</th>
                             <th>商品图片</th>
+                            <th>商品状态</th>
                             <th>操作</th>
                         </tr>
 
@@ -84,6 +85,17 @@
                            <td> {$vo.type_name}</td>
                            <td> {$vo.shop_details}</td>
                             <td><img src="__STATIC__/../uploads/{$vo.shop_img}"  alt="" height="80px" width="100px"></td>
+                            <td>
+                                <select name="shop_status" class="status">
+                                    <?php if($vo['shop_status'] == 0){ ?>
+                                       <option value="0" chaecked>下架</option>
+                                       <option value="1">上架</option>
+                                    <?php }else{ ?>
+                                        <option value="1" checked>上架</option>
+                                        <option value="0">下架</option>
+                                    <?php } ?>
+                                </select>
+                            </td>
                             <td>
                                 <button id="{$vo.shop_id}" class="upd"><a href="{:url('shop/shop_upd',['shop_id'=>$vo['shop_id']])}">修改</a></button>
                                 <button id="{$vo.shop_id}" class="dele">删除</button>
@@ -121,6 +133,29 @@
     });
 
 
+
+    $(function(){
+        $(".status").change(function(){
+            var shop_id = $(this).parent().siblings().eq(0).text();
+            var shop_status = $(this).val();
+
+            $.ajax({
+            url:"{:url('Shop/shop_edit')}",
+            data:{shop_id:shop_id,shop_status:shop_status},
+            type:'get',
+            success:function(res){
+                if(res == 0){
+                   alert("修改成功");
+                   location.href=location.href;
+                }else{
+                   alert("修改失败");
+                }
+            }
+        });
+
+       })
+        
+    })
 
 
 </script>

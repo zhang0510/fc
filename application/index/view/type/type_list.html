@@ -73,6 +73,7 @@
                             <th>分类ID</th>
                             <th>分类标题</th>
                             <th>分类图片</th>
+                            <th>商品状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -81,10 +82,21 @@
                         <tr>
                            <td>{$vo.type_id}</td>
                            <td>
-                                <?php echo str_repeat('&nbsp;&nbsp;&nbsp;',$vo['level']);?>
+                                <?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$vo['level']);?>
                                 {$vo.type_name}
                            </td>
                             <td><img src="__STATIC__/../uploads/{$vo.type_img}"  alt="" height="80px" width="100px"></td>
+                             <td>
+                                <select name="type_status" class="status">
+                                    <?php if($vo['type_status'] == 0){ ?>
+                                       <option value="0" chaecked>下架</option>
+                                       <option value="1">上架</option>
+                                    <?php }else{ ?>
+                                        <option value="1" checked>上架</option>
+                                        <option value="0">下架</option>
+                                    <?php } ?>
+                                </select>
+                            </td>
                             <td>
                                 <button id="{$vo.type_id}" class="upd"><a href="{:url('type/type_upd',['type_id'=>$vo['type_id']])}">修改</a></button>
                                 <a href="{:url('Type/delete')}?id=<?php echo $vo['type_id']?>">删除</a>
@@ -101,4 +113,33 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+ $(function(){
+        $(".status").change(function(){
+            var type_id = $(this).parent().siblings().eq(0).text();
+            var type_status = $(this).val();
 
+            $.ajax({
+            url:"{:url('Type/type_edit')}",
+            data:{type_id:type_id,type_status:type_status},
+            type:'get',
+            success:function(res){
+                if(res == 0){
+                   alert("修改成功");
+                   location.href=location.href;
+                }else if(res == 1){
+                   alert("修改失败");
+                }else{
+                    alert("下有子集不能修改状态");
+                    location.href=location.href;
+                }
+            }
+        });
+
+       })
+        
+    })
+
+
+</script>

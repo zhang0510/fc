@@ -22,9 +22,9 @@ class Shops extends Model
 
 	public function shop_upd($shop_id){
         return Db::table('shop')
-                                        ->join('type', 'shop.type_id=type.type_id')
-                                       ->where('shop_id','=',$shop_id)
-                                       ->find();
+                    ->join('type', 'shop.type_id=type.type_id')
+                    ->where('shop_id','=',$shop_id)
+                    ->find();
     }
 
     public function shop_upd_do($data){
