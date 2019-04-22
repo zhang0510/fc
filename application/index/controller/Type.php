@@ -64,9 +64,28 @@ class Type extends Common
         $data = $request->post();
         //var_dump($data);die;
         $file = request()->file('type_img');
+        if (empty($file)) { 
+          $this->error('请选择上传文件'); die;
+        } 
 
-        $info = $file->move(ROOT_PATH . 'public' .DS .'uploads');
-
+        $validata = ['size' => 500*1024, 'ext' => 'jpg,png,gif,jpeg'];
+        $info = $file->validate($validata)->move(ROOT_PATH . 'public' . DS . 'uploads');
+        if(!$info){
+            // 上传失败获取错误信息
+            $msg = $file->getError();
+            if( $msg == '上传文件大小不符！')
+            {
+                $this->error('文件大小不能超过500kb!');die;
+            }
+            elseif( $msg == '上传文件后缀不允许')
+            {
+                $this->error('文件格式错误!');die;
+            }
+            else
+            {
+                $this->error('上传失败!');die;
+            }
+        }
         $db = $info->getSaveName();
 
         $img = str_replace("\\","/","$db");
