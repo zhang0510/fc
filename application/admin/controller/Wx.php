@@ -86,9 +86,10 @@ class Wx
 		if($serch != ''){
 			$map['shop_name'] = array('like','%'.$serch.'%');
 		}
-    	$list = Db::table('shop')->field('shop_id,shop_name,shop_img')->where($map)->select();
+    	$list = Db::table('shop')->field('shop_id,shop_name,shop_img,shop_details')->where($map)->select();
     	if( $list ){
-    		return json_encode(['code'=>'1','message'=>'获取成功',"result"=>$list]);
+    		$ishave = empty($list)?'false':'true';
+    		return json_encode(['code'=>'1','message'=>'获取成功',"result"=>['ishave'=>$ishave,'list'=>$list]]);
     	}else{
     		return json_encode(['code'=>'2','message'=>'获取失败',"result"=>'']);
     	}
