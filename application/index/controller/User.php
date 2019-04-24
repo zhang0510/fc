@@ -17,7 +17,7 @@ class User extends Common
     //用户展示
 	public function user_list(){
         $uid  = Session::get('uid');
-        $con = [];
+        $con['uname'] = ['neq','admin'];
             if(Request::instance()->isPost())
             {
                 $name = input('post.name');
@@ -38,7 +38,7 @@ class User extends Common
     public function useradd(){
         $uname = $_POST['uname'];
         $upwd = md5($_POST['upwd']);
-        $openid = $_POST['openid'];
+        $openid = '';
         $role_id = $_POST['role_id'];
 
         $addarray = array(

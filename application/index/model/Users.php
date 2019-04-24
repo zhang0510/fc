@@ -10,7 +10,8 @@ class Users extends Model
 	//展示
 	public function getrole()
     {
-     return Db::table('role')->select();
+     $con['role_name'] = ['neq','超级管理员'];
+     return Db::table('role')->where($con)->select();
     }
 
 	public function getUserInfoName($uname){
