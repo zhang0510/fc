@@ -127,7 +127,18 @@ class Type extends Common
         if($res['type_pid'] == 0){
             $this->error('一级不能修改');
         }else{
-            return view('type/type_upd',['res'=>$res]);
+            $up_type = $model -> type_upd($res['type_pid']);
+            $type = [];
+            array_unshift($type, $up_type['type_id']);
+            if( $up_type['type_pid'] != 0 ){
+                array_unshift($type, $up_type['type_pid']);
+            }else{
+                $type[] = '';
+            }
+            $type_one = db("type")->where("type_pid=0")->select();
+            $type_two = db("type")->where("type_pid",$type['0'])->select();
+            $type_arr = ['type' =>$type, 'type_one' =>$type_one, 'type_two' =>$type_two];
+            return view('type/type_upd',['res'=>$res,'type_arr'=>$type_arr]);
         }
         
     }

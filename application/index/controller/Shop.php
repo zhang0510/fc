@@ -82,7 +82,7 @@ class Shop extends Common
                 $con['shop_name'] = array('like', "%$name%");
             }
 		
-        $data = db("shop")->where($con)->join('type', 'shop.type_id=type.type_id')->paginate(3);
+        $data = db("shop")->where($con)->join('type', 'shop.type_id=type.type_id')->order('shop_id desc')->paginate(10);
         return view('shop/shop_list',['data'=>$data]);
 	}
 

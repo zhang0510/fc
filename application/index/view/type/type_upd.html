@@ -58,11 +58,29 @@
                                 <input class="common-text required" id="title" name="type_name" size="50" value="{$res['type_name']}" type="text">
                             </td>
                         </tr>
-
-
-
-
-
+                        <tr>
+                            <th width="120"><i class="require-red">*</i>分类：</th>
+                            <td>
+                                <select name="type_pid" id="" class="address">
+                                        <option value="0">请选择</option>
+                                             <?php foreach($type_arr['type_one'] as $k => $val){ ?>
+                                                 <option value="{$val.type_id}" <?php echo  $val['type_id'] == $type_arr['type']['0'] ? 'selected':''; ?> >
+                                                        <?php echo $val['type_name'];?>
+                                                  </option>
+                                             <?php } ?>
+                                </select>
+                                <?php if($type_arr['type']['1'] != ''){ ?>
+                                <select name="type_pid" id="" class="address">
+                                     <option value="0">请选择</option>
+                                     <?php foreach($type_arr['type_two'] as $k => $val){?>
+                                         <option value="{$val.type_id}" <?php echo  $val['type_id'] == $type_arr['type']['1'] ? 'selected':''; ?> >
+                                     <?php echo $val['type_name'];?>
+                                          </option>
+                                     <?php }?>
+                                </select>
+                                <?php } ?>
+                            </td>
+                        </tr>
                         <tr>
                             <th><i class="require-red">*</i>商品图片：</th>
                             <td><input name="type_img" id="" type="file"><img src="__STATIC__/../uploads/{$res['type_img']}"  alt="" height="80px" width="100px"></td>
@@ -85,3 +103,36 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+$(document).on("change",".address",function(){
+    var region_id = $(this).val();
+    var _this=$(this);
+
+
+    $.ajax({
+        url:"{:url('Type/Addre')}",
+        type:"GET",
+        data:{region_id:region_id},
+        dataType:'json',
+        success:function(data){
+            if(region_id > 0){
+                if(data.length > 0){
+                    var select = "<select name='type_pid' class='address'>";
+                    select += "<option value='"+ region_id+"'>请选择</option>";
+                    $.each(data,function(i,v){
+                        select += "<option value='"+ v.type_id+"'>"+ v.type_name+"</option>";
+                    })
+                    select += "</select>";
+                    //清空后面兄弟元素
+                    _this.nextAll('select').remove();
+                    //追加到当前元素后面
+                    _this.after(select);
+                }
+            }else{
+                _this.nextAll('select').remove();
+            }
+        }
+    })
+})
+</script>
