@@ -59,7 +59,25 @@
                             </td>
                         </tr>
 
-
+                         <tr>
+                            <th width="120"><i class="require-red">*</i>分类：</th>
+                            <td>
+                                <select name="type_id" id="" class="address">
+                                    <?php foreach($type_one as $k=>$v){ ?>
+                                        <option value="{$v.type_id}" {$v.type_id == $type_arr.type ? 'selected':''} >{$v.type_name}</option>
+                                    <?php }?>
+                                </select>
+                                <select name="type_id" id="" class="address">
+                                    <?php foreach($type_two as $k=>$v){ ?>
+                                        <option value="{$v.type_id}" {$v.type_id == $type_arr.type_one ? 'selected':''}>{$v.type_name}</option>
+                                    <?php }?>
+                                </select><select name="type_id" id="" class="address">
+                                    <?php foreach($type_three as $k=>$v){ ?>
+                                        <option value="{$v.type_id}" {$v.type_id == $type_arr.type_two ? 'selected':''}>{$v.type_name}</option>
+                                    <?php }?>
+                                </select>
+                            </td>
+                        </tr>
 
 
                         <tr>
@@ -100,3 +118,38 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+$(document).on("change",".address",function(){
+    var region_id = $(this).val();
+    var _this=$(this);
+
+
+    $.ajax({
+        url:"{:url('Type/Addre')}",
+        type:"GET",
+        data:{region_id:region_id},
+        dataType:'json',
+        success:function(data){
+            if(region_id > 0){
+                if(data.length > 0){
+                    var select = "<select name='type_id' class='address'>";
+                    select += "<option value='"+ region_id+"'>请选择</option>";
+                    $.each(data,function(i,v){
+                        select += "<option value='"+ v.type_id+"'>"+ v.type_name+"</option>";
+                    })
+                    select += "</select>";
+                    //清空后面兄弟元素
+                    _this.nextAll('select').remove();
+                    //追加到当前元素后面
+                    _this.after(select);
+                }
+            }else{
+                _this.nextAll('select').remove();
+            }
+        }
+    })
+})
+
+
+</script>

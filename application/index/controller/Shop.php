@@ -100,16 +100,23 @@ class Shop extends Common
         }
     }
 
-    //修改页面
+    
+
     public function shop_upd(){
         $queryId = input();
         $model = new Shops();
         $res = $model -> shop_upd($queryId['shop_id']);
-        return view('shop/shop_upd',['res'=>$res]);
+        $type_child = Db::table('type')->where('type_id','=',$res['type_id'])->find();
+        $type = Db::table('type')->where('type_id','=',$type_child['type_pid'])->find();
+        $type_arr = ['type' =>$type['type_pid'], 'type_one' =>$type_child['type_pid'], 'type_two' =>$type_child['type_id']];
+        $type_one = Db::table('type')->where('type_pid','=','0')->select();
+        $type_two = Db::table('type')->where('type_pid','=',$type_arr['type'])->select();
+        $type_three = Db::table('type')->where('type_pid','=',$type_arr['type_one'])->select();
+
+        return view('shop/shop_upd',['res'=>$res,'type_arr'=>$type_arr,'type_one'=>$type_one,'type_two'=>$type_two,'type_three'=>$type_three]);
     }
 
-    //修改内容
-    public function shop_upd_do(){
+     public function shop_upd_do(){
         $models = new Shops();
         $request = Request::instance();
         $data = $request->post();
@@ -123,7 +130,7 @@ class Shop extends Common
             $res =  $models -> findImg($data['shop_id']);
             $data['shop_img'] =$res['shop_img'];
         }
-        $res = $models -> shop_upd_do($data);
+        $res = $models ->shop_upd_do($data);
         if($res){
             return $this->redirect('shop_list');
         }
