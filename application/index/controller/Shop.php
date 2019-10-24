@@ -100,8 +100,6 @@ class Shop extends Common
         }
     }
 
-    
-
     public function shop_upd(){
         $queryId = input();
         $model = new Shops();

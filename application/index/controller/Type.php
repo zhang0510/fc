@@ -105,16 +105,13 @@ class Type extends Common
 
     public function delete()
     {
-        $request = Request::instance();
-        $type_id   = $request->get('id');
+        $id = input('id');
         $model = new Types();
-        $data  = $model->getDele($type_id);
+        $data  = $model->getDele($id);
         if($data == 1){
-             $this->error('删除成功');
+            $this->success('删除成功','type/type_list');
         }else if($data == 0){
-            $this->error('失败');
-        }else{
-            $this->error('一级不能删！！！！');
+            $this->error('删除失败');
         }
     }
 

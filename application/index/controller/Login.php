@@ -38,5 +38,12 @@ class Login extends Controller
         }
 
 	}
+
+	public function show(){
+        $id = input('id');
+        $shop = Db::name('shop')->where('shop_id','=',$id)->value('shop_details');
+        $this->assign('shop',$shop);
+        return view('shop');
+    }
 }
 ?>

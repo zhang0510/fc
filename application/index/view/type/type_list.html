@@ -99,7 +99,7 @@
                             </td>
                             <td>
                                 <button id="{$vo.type_id}" class="upd"><a href="{:url('type/type_upd',['type_id'=>$vo['type_id']])}">修改</a></button>
-                                <a href="{:url('Type/delete')}?id=<?php echo $vo['type_id']?>">删除</a>
+                                <a href="{:url('Type/delete',['id'=>$vo['type_id']])}">删除</a>
                             </td>
                         </tr>
                         {/volist}

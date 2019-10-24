@@ -10,7 +10,7 @@ class Wx
 {
     public function index()
     {
-    	$code = input('get.code');
+    	$code = input('code');
         //appid
 		$APPID = config::get("wechat.wx_appid");
 		//appscret
@@ -27,22 +27,22 @@ class Wx
 		$arr = http_send($wx_request_url, $param, 'post'); 
 		$arr = json_decode($arr,true);
 		if(isset($arr['errcode']) && !empty($arr['errcode'])){
-		  return json(['code'=>'2','message'=>$arr['errmsg'],"result"=>null]);
+		  return json(['code'=>'2','message'=>$arr['errcode'],"result"=>null]);
 		}
 		$openid = $arr['openid'];
 		$session_key = $arr['session_key'];
 
 		// 数据签名校验
 		$signature = input("signature");
-		$signature2 = sha1($_GET['rawData'].$session_key);  //框架自带的input会过滤掉必要的数据
+		$signature2 = sha1($_REQUEST['rawData'].$session_key);  //框架自带的input会过滤掉必要的数据
 		if ($signature != $signature2) {
 		  $msg = "shibai 1";
 		  return json(['code'=>'2','message'=>'获取失败',"result"=>$msg]);
 		}
 
 		//开发者如需要获取敏感数据，需要对接口返回的加密数据( encryptedData )进行对称解密
-		$encryptedData = $_GET['encryptedData'];
-		$iv = $_GET['iv'];
+		$encryptedData = $_REQUEST['encryptedData'];
+		$iv = $_REQUEST['iv'];
 		include_once (EXTEND_PATH. 'wxdev/wxBizDataCrypt.php');
 		$pc = new \WXBizDataCrypt($APPID, $session_key);
 		$errCode = $pc->decryptData($encryptedData, $iv, $data);  //其中$data包含用户的所有数据
